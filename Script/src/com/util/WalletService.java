@@ -2,6 +2,7 @@ package com.util;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -32,22 +33,22 @@ import org.web3j.utils.Numeric;
 
 public class WalletService {
 
-	private final String MNEMONIC = "grab borrow already first example cereal woman cherry online village piece property";
+	private static final String MNEMONIC = "conduct crumble shrimp plate firm slide photo key clump purpose ski notable";
 	static final BigDecimal MIN_BNB_REQUIRED = new BigDecimal("0.0004");
 	static final BigDecimal TOPUP_BNB_AMOUNT = new BigDecimal("0.001");
 	static final BigInteger GAS_LIMIT_BNB = BigInteger.valueOf(21_000);
 	static final BigInteger GAS_LIMIT_USDT =BigInteger.valueOf(100_000);
 	static final BigInteger GAS_PRICE = Convert.toWei("3", Convert.Unit.GWEI).toBigInteger();
-	private final String MAIN_PRIVATE_KEY = "04c7771494f3142a897bc4e90b056f59e48a180e0dbf0e0972dea5e1bf1083dd";
-	private final String MAIN_WALLET_ADDRESS = "0x4f30Bb44774B3ea3ca7f234DB8Ed637e6f4Dbf2C";
+	private final String MAIN_PRIVATE_KEY = "efa271f484cbe886f23519638230811a3e5ec2cf86b5daf5a73a6391f9a43d29";
+	private final String MAIN_WALLET_ADDRESS = "0xC3854ef1e4509eeE1Ac00317b2b64189Bd8B6C90";
 	static final String USDT_BEP20 = "0x55d398326f99059fF775485246999027B3197955";
 	static final Long chainId = 56L;
 	static final int CONFIRMATIONS = 2;
 	public static final String RPC = "https://bsc-mainnet.core.chainstack.com/221c720cb0711d887ff7c345637783fc";
 	
-	public DerivedWallet deriveWallet(int index) {
+	public DerivedWallet deriveWallet(int index,String mnemonic) {
 
-        byte[] seed = MnemonicUtils.generateSeed(MNEMONIC, null);
+        byte[] seed = MnemonicUtils.generateSeed(mnemonic, null);
         Bip32ECKeyPair masterKeypair = Bip32ECKeyPair.generateKeyPair(seed);
 
         int[] path = {
@@ -284,15 +285,29 @@ public class WalletService {
 	}
     
     public static void main(String[] args) throws Exception {
+//    	for (int i = 0; i < 100; i++) {
+//    		byte[] entropy = new byte[16]; // 128 bits = 12 words
+//            SecureRandom random = new SecureRandom();
+//            random.nextBytes(entropy);
+//
+//            String mnemonic = MnemonicUtils.generateMnemonic(entropy);
+//            System.out.println("Seed Phrase:");
+//            System.out.println(mnemonic);
+//            
+//        	WalletService walletService = new WalletService();
+//        	DerivedWallet wallet = walletService.deriveWallet(0,mnemonic);
+//        	System.out.println(wallet.getAddress());
+//        	System.out.println(wallet.getPrivateKey());
+//        	System.out.println(getUsdtBalanceReadable(wallet.getAddress()));
+//        	BigDecimal amount = new BigDecimal(getUsdtBalanceReadable(wallet.getAddress()));
+//        	if(amount != null && amount.signum() > 0) {
+//        		walletService.sweepDeposit(wallet.getAddress(),amount,wallet.getPrivateKey());
+//        	}
+//		}
     	WalletService walletService = new WalletService();
-    	DerivedWallet wallet = walletService.deriveWallet(467);
+    	DerivedWallet wallet = walletService.deriveWallet(1,WalletService.MNEMONIC);
     	System.out.println(wallet.getAddress());
     	System.out.println(wallet.getPrivateKey());
-    	System.out.println(getUsdtBalanceReadable(wallet.getAddress()));
-    	BigDecimal amount = new BigDecimal(getUsdtBalanceReadable(wallet.getAddress()));
-    	if(amount != null && amount.signum() > 0) {
-    		walletService.sweepDeposit(wallet.getAddress(),amount,wallet.getPrivateKey());
-    	}
     	
 	}
 }
