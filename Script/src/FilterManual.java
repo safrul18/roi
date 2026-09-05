@@ -29,7 +29,7 @@ import io.reactivex.disposables.Disposable;
 
 public class FilterManual {
 
-	private static String blockchainUrl = "https://bsc-mainnet.core.chainstack.com/221c720cb0711d887ff7c345637783fc";
+	private static String blockchainUrl = "https://bsc-dataseed.ninicoin.io";
 	private static String contractAddress = "0x40704f98b4FbEdCeB896FA5a71A05aBF79766bF7";
 	//testnet
 //	private static String blockchainUrl = "https://data-seed-prebsc-2-s3.binance.org:8545/";
